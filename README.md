@@ -11,9 +11,10 @@ Mở terminal và thực hiện tải mã nguồn từ GitHub:
 ```bash
 git clone [https://github.com/Huy132005/Manchester-City-football-kits.git](https://github.com/Huy132005/Manchester-City-football-kits.git)
 cd Manchester-City-football-kits
-
+```
 
 ### 2. Chạy file BE
+```bash
 cd jersey-shop-be
 
 # Cài đặt dependency và build file jar
@@ -21,8 +22,9 @@ cd jersey-shop-be
 
 # Khởi chạy ứng dụng
 ./mvnw spring-boot:run
-
+```
 ### 3. Chạy file FE
+```bash
 cd jersey-shop-fe
 
 # Cài đặt thư viện
@@ -30,3 +32,4 @@ npm install
 
 # Chạy ở chế độ Development (Vite/CRA)
 npm run dev
+```
