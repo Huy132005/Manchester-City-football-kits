@@ -9,7 +9,7 @@ Dự án quản lý cửa hàng áo đấu Manchester City, sử dụng kiến t
 ### 1. Clone source về
 Mở terminal và thực hiện tải mã nguồn từ GitHub:
 ```bash
-git clone [https://github.com/Huy132005/Manchester-City-football-kits.git](https://github.com/Huy132005/Manchester-City-football-kits.git)
+git clone https://github.com/Huy132005/Manchester-City-football-kits.git
 cd Manchester-City-football-kits
 ```
 
