@@ -5,6 +5,60 @@
   text-align: center;
 }
 
+:root {
+  --mc-primary: #0066CC;
+  --mc-accent: #FFD700;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mancity-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(6, 69, 173, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  border-bottom: 3px solid var(--mc-accent);
+}
+
+.mancity-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.mancity-logo:hover {
+  transform: scale(1.05);
+}
+
+.mancity-logo-text {
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.mancity-logo img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.mancity-logo:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
