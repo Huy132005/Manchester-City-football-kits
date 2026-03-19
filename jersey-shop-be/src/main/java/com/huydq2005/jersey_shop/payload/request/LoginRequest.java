@@ -1,2 +1,13 @@
-package com.huydq2005.jersey_shop.payload.request;public class LoginRequest {
+package com.huydq2005.jersey_shop.payload.request;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
+public class LoginRequest {
+    @NotBlank
+    private String username;
+
+    @NotBlank
+    private String password;
 }

@@ -1,4 +1,11 @@
 package com.huydq2005.jersey_shop.dto;
 
-public class Size {
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
+public class SizeDto {
+    private Long id;
+    private String name;
 }

@@ -1,2 +1,6 @@
-package com.huydq2005.jersey_shop.service;public class UserService {
+package com.huydq2005.jersey_shop.service;
+
+
+public interface UserService  {
+
 }

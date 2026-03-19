@@ -1,2 +1,15 @@
-package com.huydq2005.jersey_shop.exception;public class ApiError {
+package com.huydq2005.jersey_shop.exception;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+public class ApiError {
+
+    private int status;
+    private String message;
+    private LocalDateTime timestamp;
 }

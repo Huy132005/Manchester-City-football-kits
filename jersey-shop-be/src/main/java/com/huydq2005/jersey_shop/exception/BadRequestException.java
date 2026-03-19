@@ -1,2 +1,16 @@
-package com.huydq2005.jersey_shop.exception;public class BadRequestException {
+package com.huydq2005.jersey_shop.exception;
+
+import java.util.Map;
+
+public class BadRequestException extends RuntimeException {
+
+    private Map<String, String> errors;
+
+    public BadRequestException(Map<String, String> errors) {
+        this.errors = errors;
+    }
+
+    public Map<String, String> getErrors() {
+        return errors;
+    }
 }
