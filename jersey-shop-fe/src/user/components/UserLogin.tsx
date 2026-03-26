@@ -10,38 +10,43 @@ export function UserLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
- const handleLogin = async (e: React.FormEvent) => {
+const handleLogin = async (e: React.FormEvent) => {
   e.preventDefault();
   setError('');
+  
+  if (!username || !password) {
+    setError('Vui lòng nhập email/tên đăng nhập và mật khẩu');
+    return;
+  }
+
   setLoading(true);
 
   try {
-    if (!username || !password) {
-      setError('Vui lòng nhập email/tên đăng nhập và mật khẩu');
-      return;
-    }
-
     const response = await authService.login({ username, password });
 
-    console.log('Login successful:', response);
-
-    // Lấy role
+    // Lấy danh sách roles từ response
     const roles = response.user.roles;
 
-    if (roles.includes('ADMIN')) {
-      navigate('/admin/dashboard');
-    } else {
-      navigate('/dashboard');
+    // ⛔ CHẶN ADMIN: Nếu danh sách roles có chứa 'ROLE_ADMIN'
+    if (roles.includes('ROLE_ADMIN') || roles.includes('ADMIN')) {
+      setError('Tài khoản Admin không được phép đăng nhập tại trang dành cho khách hàng.');
+      
+      // Quan trọng: Phải gọi logout để xóa Token vừa được lưu trong LocalStorage
+      authService.logout(); 
+      setLoading(false);
+      return; 
     }
 
+    // ✅ NẾU LÀ USER: Cho phép vào trang cá nhân
+    console.log('User Login successful');
+    navigate('/dashboard');
+
   } catch (err: any) {
-    // ✅ nếu backend trả 401 với message "Sai tài khoản hoặc mật khẩu"
     if (err.response?.status === 401) {
-      setError('Sai tên đăng nhập hoặc mật khẩu'); 
+      setError('Sai tên đăng nhập hoặc mật khẩu');
     } else {
       setError(err.response?.data?.message || 'Đăng nhập thất bại');
     }
-    console.error('User login error:', err);
   } finally {
     setLoading(false);
   }
@@ -99,9 +104,7 @@ export function UserLogin() {
           <Link to="/signup">Đăng ký</Link>
         </div>
 
-        <div className="mancity-footer">
-          <a href="/admin/login">↔️ Admin?</a>
-        </div>
+       
       </div>
     </div>
   );

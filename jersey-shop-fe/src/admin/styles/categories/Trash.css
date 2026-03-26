@@ -1,0 +1,124 @@
+/* Container */
+.container {
+  padding: 24px;
+}
+
+/* Title */
+.container h2 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.table tr:hover {
+  background: #f9f9ff;
+}
+
+/* Badge deleted */
+.badge-deleted {
+  background: #fdecea;
+  color: #e74c3c;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Button restore */
+.btn-restore {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-restore:hover {
+  opacity: 0.9;
+}
+
+/* Empty state */
+.empty {
+  padding: 16px;
+  color: #777;
+}
+
+/* Back button */
+.btn-back {
+  margin-bottom: 16px;
+  background: #ddd;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+/* style chung cho tất cả các nút trong bảng */
+td .btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Nút khôi phục */
+td .btn-restore {
+  background-color: #4caf50; /* xanh lá */
+  color: #fff;
+}
+
+td .btn-restore:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Nút xóa vĩnh viễn */
+td .btn-delete {
+  background-color: #f44336; /* đỏ */
+  color: #fff;
+}
+
+td .btn-delete:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
+}
+
+/* Khoảng cách giữa các nút */
+td .btn + .btn {
+  margin-left: 8px;
+}
+
+/* Nếu muốn thêm shadow nhẹ */
+td .btn {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}

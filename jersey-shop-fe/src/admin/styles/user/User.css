@@ -1,0 +1,200 @@
+/* ===== CONTAINER ===== */
+.div{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+  padding: 40px;
+  
+}
+.h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+.user-management-container {
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  overflow-x: auto; /* chống vỡ trên màn nhỏ */
+}
+
+/* ===== TABLE ===== */
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  font-size: 14px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* HEADER */
+.user-table thead {
+  background: #f5f7fa;
+}
+
+.user-table th {
+  padding: 14px 16px; /* 👉 tăng độ rộng */
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #eaeaea;
+}
+
+/* BODY */
+.user-table td {
+  padding: 14px 16px; /* 👉 rộng hơn */
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+/* hover row */
+.user-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* badge trạng thái */
+.status-badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ACTIVE */
+.status-badge.active {
+  background: #e6f7ee;
+  color: #1a7f37;
+}
+
+/* INACTIVE */
+.status-badge.inactive {
+  background: #fdecea;
+  color: #d93025;
+}
+
+/* ACTION BUTTON GROUP */
+.action-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* BUTTON CHUNG */
+.toggle-btn,
+.view-btn {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* NÚT KHÓA */
+.btn-danger {
+  background: #ff4d4f;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #d9363e;
+}
+
+/* NÚT KÍCH HOẠT */
+.btn-success {
+  background: #52c41a;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #389e0d;
+}
+
+/* NÚT XEM */
+.view-btn {
+  background: #1890ff;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #096dd9;
+}
+/* ===== STATUS ===== */
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.inactive {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+/* ===== ROLE ===== */
+.role-badge {
+  background: #6cabdd;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-right: 4px;
+  font-size: 12px;
+}
+
+/* ===== BUTTON GROUP ===== */
+.action-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== BUTTON ===== */
+.toggle-btn,
+.view-btn {
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  width: 100%;
+}
+
+/* toggle */
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+/* view */
+.view-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.view-btn:hover {
+  background-color: #0056b3;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .user-table th,
+  .user-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+}

@@ -1,0 +1,85 @@
+.detail-header-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.btn-back {
+    background: none;
+    border: none;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: 600;
+    width: fit-content;
+    padding: 0;
+}
+
+.btn-back:hover {
+    text-decoration: underline;
+}
+
+.detail-card {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 700px;
+    border: 1px solid #edf2f7;
+}
+
+.detail-info-group {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.detail-info-group label {
+    width: 150px;
+    font-weight: 700;
+    color: #4a5568;
+    font-size: 15px;
+}
+
+.detail-info-group span {
+    color: #2d3748;
+    font-size: 16px;
+}
+
+.highlight-name {
+    font-size: 20px !important;
+    font-weight: 600;
+    color: #1a202c !important;
+}
+
+.divider {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.btn-edit-detail {
+    background-color: #1c2c5b; /* Màu Navy Man City */
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-edit-detail:hover {
+    background-color: #6badf0; /* Sky Blue Man City */
+    transform: translateY(-2px);
+}
+
+/* Badge mini */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+.bg-green { background: #c6f6d5; color: #22543d; }
+.bg-red { background: #fed7d7; color: #822727; }

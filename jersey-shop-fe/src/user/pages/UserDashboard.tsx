@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../../services/authService';
-import '../styles/login/Login.css';
+import '../styles/dashboard/Dashboard.css';
 
 export function UserDashboard() {
   const navigate = useNavigate();
   const user = authService.getUser();
 
-  // 🔥 bảo vệ route
+  const [activeTab, setActiveTab] = useState('dashboard'); // 👈 tab hiện tại
+
   useEffect(() => {
     if (!authService.isAuthenticated()) {
       navigate('/login');
       return;
     }
 
-    // ❗ nếu là admin thì redirect về đúng trang
     if (authService.isAdmin()) {
       navigate('/admin/dashboard');
     }
@@ -26,25 +26,120 @@ export function UserDashboard() {
   };
 
   return (
-    <div className="mancity-dashboard">
-      <div className="mancity-dashboard-content">
-        <div className="mancity-dashboard-header">
-          <h1>⚽ Fan Dashboard</h1>
-          <div className="badge">Manchester City</div>
+    <div className="layout">
+
+      {/* SIDEBAR */}
+      <div className="sidebar">
+        <h2 className="logo">MC Shop</h2>
+
+        <ul>
+          <li
+            className={activeTab === 'dashboard' ? 'active' : ''}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            🏠 Dashboard
+          </li>
+
+          <li
+            className={activeTab === 'profile' ? 'active' : ''}
+            onClick={() => setActiveTab('profile')}
+          >
+            👤 Hồ sơ
+          </li>
+
+          <li>🛒 Sản phẩm</li>
+          <li>📦 Đơn hàng</li>
+          <li>❤️ Yêu thích</li>
+        </ul>
+      </div>
+
+      {/* MAIN */}
+      <div className="main">
+
+        {/* TOPBAR */}
+        <div className="topbar">
+          <h2>
+            {activeTab === 'dashboard' && 'Dashboard'}
+            {activeTab === 'profile' && 'Thông tin cá nhân'}
+          </h2>
         </div>
 
-        <div className="user-info">
-          <p><strong>👤 Tên:</strong> {user?.username}</p>
-          <p><strong>📧 Email:</strong> {user?.email}</p>
-          <p><strong>🎖️ Vai trò:</strong> {user?.roles.join(', ')}</p>
-        </div>
+        {/* CONTENT */}
+        <div className="content">
 
-        <button
-          onClick={handleLogout}
-          className="logout-button"
-        >
-          ✓ Đăng Xuất
-        </button>
+          {/* DASHBOARD */}
+          {activeTab === 'dashboard' && (
+            <>
+              <div className="cards">
+                <div className="card">
+                  <h3>Đơn hàng</h3>
+                  <p>12</p>
+                </div>
+                <div className="card">
+                  <h3>Yêu thích</h3>
+                  <p>5</p>
+                </div>
+                <div className="card">
+                  <h3>Thông báo</h3>
+                  <p>3</p>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* PROFILE */}
+         {activeTab === 'profile' && (
+  <div className="profile-card-v2">
+
+    {/* HEADER */}
+    <div className="profile-header">
+      <div className="avatar-large">
+        {user?.username?.charAt(0).toUpperCase()}
+      </div>
+
+      <div>
+        <h2>{user?.username}</h2>
+        {/* <p className="email">{user?.email}</p> */}
+
+        <div className="role-badge">
+          {user?.roles?.join(', ')}
+        </div>
+      </div>
+    </div>
+
+    {/* INFO GRID */}
+    <div className="profile-info">
+      <div className="info-item">
+        <span>Username</span>
+        <strong>{user?.username}</strong>
+      </div>
+
+      {/* <div className="info-item">
+        <span>Email</span>
+        <strong>{user?.email}</strong>
+      </div> */}
+
+      <div className="info-item">
+        <span>Vai trò</span>
+        <strong>{user?.roles?.join(', ')}</strong>
+      </div>
+
+      <div className="info-item">
+        <span>Trạng thái</span>
+        <strong className="status active">Active</strong>
+      </div>
+    </div>
+
+    {/* ACTION */}
+    <div className="profile-actions">
+      <button className="btn-edit">✏️ Chỉnh sửa</button>
+      <button className="btn-password">🔒 Đổi mật khẩu</button>
+    </div>
+
+  </div>
+)}
+
+        </div>
       </div>
     </div>
   );

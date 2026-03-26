@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { LoginRequest, AuthResponse, SignupRequest } from '../types/auth';
+import { LoginRequest, SignupRequest } from '../types/auth';
 
-const API_BASE_URL = `http://localhost:8080/api/v1/auth`;
+const API_BASE_URL = 'http://localhost:8080/api/v1/auth';
+const USER_API = 'http://localhost:8080/api/v1/users';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -10,104 +11,97 @@ const axiosInstance = axios.create({
   },
 });
 
-// 🔥 interceptor tự gắn token vào mọi request
+// Interceptor gắn token
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('accessToken');
-  if (token) {
+
+  if (token && !config.url?.includes('/login') && !config.url?.includes('/register')) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
 export const authService = {
-  // ✅ CHỈ 1 API LOGIN DUY NHẤT
-  login: async (credentials: LoginRequest): Promise<AuthResponse> => {
-    try {
-      const response = await axiosInstance.post<AuthResponse>('/login', credentials);
+  // 1. Login
+login: async (credentials: LoginRequest): Promise<any> => {
+  const response = await axiosInstance.post('/login', credentials);
 
-      if (response.data) {
-        // lưu token
-        localStorage.setItem('accessToken', response.data.auth.accessToken);
-        localStorage.setItem('refreshToken', response.data.auth.refreshToken);
+  console.log("LOGIN RESPONSE:", response.data); // 👈 debug
 
-        // lưu user
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
+  if (response.data) {
+    const accessToken = response.data.auth?.accessToken;
 
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+    console.log("TOKEN:", accessToken); // 👈 debug token
+
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+  }
+
+  return response.data;
+},
+  // 2. Signup
+  signup: async (userData: SignupRequest): Promise<any> => {
+    const response = await axiosInstance.post('/register', userData);
+    return response.data;
   },
 
-  // Logout
+  // 3. Logout
   logout: () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
+    localStorage.removeItem('refreshToken');
   },
 
-  // Get stored token
-  getAccessToken: (): string | null => {
-    return localStorage.getItem('accessToken');
-  },
-
-  // Get stored user
+  // 4. Get user
   getUser: () => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  },
-
-  // Lấy role (🔥 thêm cực hữu ích)
-  getRoles: (): string[] => {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user).roles || [] : [];
-  },
-
-  // Check login
-  isAuthenticated: (): boolean => {
-    return !!localStorage.getItem('accessToken');
-  },
-
-  // Check role admin (🔥 dùng cho route)
-  isAdmin: (): boolean => {
-    const roles = authService.getRoles();
-    return roles.includes('ADMIN');
-  },
-
-  // ✅ SIGNUP
-  signup: async (data: SignupRequest): Promise<any> => {
+    const userData = localStorage.getItem('user');
     try {
-      const payload = {
-        username: data.username,
-        full_name: data.full_name,
-        email: data.email,
-        password: data.password,
-        phone: data.phone,
-        address: data.address,
-      };
-      console.log('Sending signup payload:', payload);
-      const response = await axiosInstance.post<any>('/register', payload);
-
-      // ✅ Nếu backend trả auth token (auto login)
-      if (response.data?.auth?.accessToken) {
-        localStorage.setItem('accessToken', response.data.auth.accessToken);
-        localStorage.setItem('refreshToken', response.data.auth.refreshToken);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
-      
-      // ✅ Trả về response cho component xử lý
-      return response.data;
-    } catch (error: any) {
-      // 🔥 Nếu backend trả 400/409 nhưng message "Registered successfully" = thành công
-      if (error.response?.status === 400 || error.response?.status === 409) {
-        const message = error.response?.data?.message || '';
-        if (message.toLowerCase().includes('registered') || message.toLowerCase().includes('successfully')) {
-          console.log('✅ Signup thành công (backend trả 400 nhưng message success)');
-          return { success: true, message, username: error.response?.data?.username };
-        }
-      }
-      throw error;
+      return userData ? JSON.parse(userData) : null;
+    } catch {
+      return null;
     }
   },
+
+  // 5. Check admin
+  isAdmin: () => {
+    const user = authService.getUser();
+    if (!user || !user.roles || !Array.isArray(user.roles)) return false;
+    return user.roles.includes('ROLE_ADMIN');
+  },
+
+  // 6. Auth check
+  isAuthenticated: () => {
+    const token = localStorage.getItem('accessToken');
+    return !!token;
+  },
+
+  // 7. Lấy danh sách user
+  getAllUsers: async (): Promise<any[]> => {
+    const response = await axiosInstance.get(`${USER_API}`);
+    return response.data;
+  },
+
+  // 8. Toggle trạng thái user
+  toggleUserStatus: async (userId: number, currentStatus: string) => {
+    const newStatus = currentStatus === 'ACTIVE' ? 'INACTIVE' : 'ACTIVE';
+
+    const response = await axiosInstance.put(
+      `${USER_API}/${userId}/status`,
+      { status: newStatus }
+    );
+
+    return response.data;
+  },
+  getUserById: async (id: number) => {
+  const token = localStorage.getItem('accessToken');
+
+  const response = await axios.get(`${USER_API}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+
+  return response.data;
+},
 };

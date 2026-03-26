@@ -10,6 +10,7 @@ export function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // Thêm từ khóa async ở đây 🚨
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -22,20 +23,19 @@ export function AdminLogin() {
         return;
       }
 
-      // ✅ dùng API chung
+      // Gọi API login
       const response = await authService.login({ username, password });
-
-      const userRoles = response.user.roles;
-
-      // ❗ check quyền admin
-      if (!userRoles.includes('ADMIN') && !userRoles.includes('SUPERADMIN')) {
-        setError('Tài khoản của bạn không có quyền admin');
-        authService.logout();
+      
+      // Sử dụng hàm isAdmin() tập trung từ authService để kiểm tra quyền
+      // Hàm này đã được update để check ROLE_ADMIN/ROLE_SUPERADMIN linh hoạt
+      if (!authService.isAdmin()) {
+        setError('Tài khoản của bạn không có quyền quản trị viên');
+        authService.logout(); // Xóa token vừa lưu nếu không phải admin
         setLoading(false);
         return;
       }
 
-      console.log('Admin login successful:', response);
+      console.log('Admin login successful');
       navigate('/admin/dashboard');
 
     } catch (err: any) {
@@ -70,8 +70,8 @@ export function AdminLogin() {
             />
           </div>
 
-          <div className="form-group">🔐 
-            <label htmlFor="password">Mật khẩu</label>
+          <div className="form-group">
+            <label htmlFor="password">🔐 Mật khẩu</label>
             <input
               id="password"
               type="password"
@@ -93,10 +93,6 @@ export function AdminLogin() {
             {loading ? '⏳ Đang đăng nhập...' : '✓ Đăng Nhập'}
           </button>
         </form>
-
-        <div className="mancity-links">
-          <a href="/login">↔️ User Login</a>
-        </div>
       </div>
     </div>
   );
